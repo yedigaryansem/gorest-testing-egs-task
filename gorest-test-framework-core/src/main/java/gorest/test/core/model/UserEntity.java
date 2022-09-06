@@ -16,6 +16,9 @@ public class UserEntity {
     private String gender;
     private String status;
 
+    /**
+     * An extension class for Lombok, to add our custom methods to the builder.
+     */
     public static class UserEntityBuilder {
         public UserEntityBuilder male() {
             this.gender = UserConstants.Gender.MALE;

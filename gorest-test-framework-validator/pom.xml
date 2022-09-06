@@ -9,13 +9,20 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>gorest.test</groupId>
-    <artifactId>gorest-test-framework</artifactId>
+    <artifactId>gorest-test-framework-validator</artifactId>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>gorest.test</groupId>
+            <artifactId>gorest-test-framework-core</artifactId>
+            <version>${gorest.test.framework.core.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
