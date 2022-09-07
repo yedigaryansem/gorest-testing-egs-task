@@ -49,7 +49,7 @@
                 <version>2.22.2</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src\test\resources\first.xml</suiteXmlFile>
+                        <suiteXmlFile></suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
