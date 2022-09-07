@@ -1,6 +1,7 @@
 package gorest.test.core.model;
 
-import gorest.test.core.constants.UserConstants;
+import gorest.test.core.constants.UserGender;
+import gorest.test.core.constants.UserStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,24 +21,25 @@ public class UserEntity {
      * An extension class for Lombok, to add our custom methods to the builder.
      */
     public static class UserEntityBuilder {
-        public UserEntityBuilder male() {
-            this.gender = UserConstants.Gender.MALE;
+        public UserEntityBuilder gender(UserGender gender) {
+            this.gender = gender.value;
             return this;
         }
 
-        public UserEntityBuilder female() {
-            this.gender = UserConstants.Gender.FEMALE;
+        public UserEntityBuilder status(UserStatus status) {
+            this.status = status.value;
             return this;
         }
 
-        public UserEntityBuilder active() {
-            this.status = UserConstants.Status.ACTIVE;
+        public UserEntityBuilder gender(String gender) {
+            this.gender = gender;
             return this;
         }
 
-        public UserEntityBuilder inactive() {
-            this.status = UserConstants.Status.INACTIVE;
+        public UserEntityBuilder status(String status) {
+            this.status = status;
             return this;
         }
+
     }
 }

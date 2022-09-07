@@ -1,10 +1,10 @@
 package gorest.test.core.model;
 
+import gorest.test.core.constants.TodoStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,6 +23,11 @@ public class TodoEntity {
      * An extension class for Lombok, to add our custom date time setter to the builder.
      */
     public static class TodoEntityBuilder {
+        public TodoEntityBuilder status(TodoStatus status) {
+            this.status = status.value;
+            return this;
+        }
+
         public TodoEntityBuilder dueDate(String dueDate) {
             this.dueDate = dueDate;
             return this;
