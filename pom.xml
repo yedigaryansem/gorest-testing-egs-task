@@ -27,7 +27,32 @@
         <!--External modules' properties-->
         <org.apache.httpcomponents.client5.httpclient5.version>5.1.3</org.apache.httpcomponents.client5.httpclient5.version>
         <org.projectlombok.lombok.version>1.18.24</org.projectlombok.lombok.version>
+        <org.springframework.boot.spring-boot-dependencies>2.7.3</org.springframework.boot.spring-boot-dependencies>
+    </properties>
 
-        </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${org.springframework.boot.spring-boot-dependencies}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
