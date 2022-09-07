@@ -30,6 +30,7 @@
         <org.apache.httpcomponents.client5.httpclient5.version>5.1.3</org.apache.httpcomponents.client5.httpclient5.version>
         <org.projectlombok.lombok.version>1.18.24</org.projectlombok.lombok.version>
         <org.springframework.boot.spring-boot-dependencies>2.7.3</org.springframework.boot.spring-boot-dependencies>
+        <com.fasterxml.jackson.core.jackson-databind.version>2.13.4</com.fasterxml.jackson.core.jackson-databind.version>
     </properties>
 
     <dependencyManagement>

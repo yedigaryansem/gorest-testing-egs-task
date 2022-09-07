@@ -28,6 +28,11 @@ public class TodoEntity {
             return this;
         }
 
+        public TodoEntityBuilder status(String status) {
+            this.status = status;
+            return this;
+        }
+
         public TodoEntityBuilder dueDate(String dueDate) {
             this.dueDate = dueDate;
             return this;
