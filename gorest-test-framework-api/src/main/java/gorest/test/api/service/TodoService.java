@@ -1,63 +1,36 @@
 package gorest.test.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gorest.test.api.RequestFactory;
-import gorest.test.core.model.TodoEntity;
+import gorest.test.api.communication.RequestFactory;
+import gorest.test.core.model.TodoPartialUpdate;
+import gorest.test.core.model.TodoResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.net.URISyntaxException;
 
 @Component
-public class TodoService extends ServiceBase {
-    long lastId = 0;
-
+public class TodoService extends ResourceCrudServiceBase<TodoResource, TodoPartialUpdate> {
     @Autowired
-    public TodoService(RequestFactory requestFactory, ObjectMapper objectMapper) {
-        super(requestFactory, objectMapper);
+    public TodoService(RequestFactory baseRequestFactory,
+                       ObjectMapper objectMapper) throws URISyntaxException {
+        super(baseRequestFactory, objectMapper, TodoResource.class);
     }
 
-    public TodoEntity createNewTodo(TodoEntity newTodo) {
-        //TODO: remove mock and implement
-        return TodoEntity.builder()
-                .id(++lastId)
-                .authorId(newTodo.getAuthorId())
-                .title(newTodo.getTitle())
-                .dueDate(newTodo.getDueDate())
-                .status(newTodo.getStatus())
-                .build();
+    @Override
+    protected Class<TodoResource> resourceType() {
+        return TodoResource.class;
     }
 
-    public TodoEntity getTodoById(Long id) {
-        //TODO: remove mock and implement
-        return TodoEntity.builder()
-                .id(id)
-                .build();
+    @Override
+    protected Class<TodoResource[]> resourceArrayType() {
+        return TodoResource[].class;
     }
 
-    /*
-     Ideally, here we should have a proper argument type for searching todos
-     But, as we are short in time, this will be a temporary implementation, and we'll add it later on, if there
-     will be time enough
-     */
-    public List<TodoEntity> getTodosByDetails(TodoEntity todoDetails) {
-        return List.of(todoDetails);
-    }
-
-    public TodoEntity updateTodo(TodoEntity updatedTodo) {
-        //TODO: remove mock and implement
-        return updatedTodo;
-    }
-
-    public TodoEntity updateTodoPartially(TodoEntity updatedTodo) {
-        //TODO: remove mock and implement
-        return updatedTodo;
-    }
-
-    public TodoEntity deleteTodo(Long id) {
-        //TODO: remove mock and implement
-        return TodoEntity.builder()
-                .id(id)
+    @Override
+    protected TodoPartialUpdate createPartialUpdateObject(TodoResource updates) {
+        return TodoPartialUpdate.builder()
+                .copyFromResource(updates)
                 .build();
     }
 }

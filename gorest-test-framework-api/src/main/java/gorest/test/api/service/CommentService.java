@@ -1,63 +1,38 @@
 package gorest.test.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gorest.test.api.RequestFactory;
-import gorest.test.core.model.CommentEntity;
+import gorest.test.api.communication.RequestFactory;
+import gorest.test.core.model.CommentPartialUpdate;
+import gorest.test.core.model.CommentResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.net.URISyntaxException;
 
 @Component
-public class CommentService extends ServiceBase {
-    long lastId = 0;
+public class CommentService extends ResourceCrudServiceBase<CommentResource, CommentPartialUpdate> {
 
     @Autowired
-    public CommentService(RequestFactory requestFactory, ObjectMapper objectMapper) {
-        super(requestFactory, objectMapper);
+    public CommentService(RequestFactory baseRequestFactory,
+                          ObjectMapper objectMapper) throws URISyntaxException {
+        super(baseRequestFactory, objectMapper, CommentResource.class);
     }
 
-    public CommentEntity createNewComment(CommentEntity newComment) {
-        //TODO: remove mock and implement
-        return CommentEntity.builder()
-                .id(++lastId)
-                .postId(newComment.getPostId())
-                .name(newComment.getName())
-                .email(newComment.getEmail())
-                .body(newComment.getBody())
+    @Override
+    protected Class<CommentResource> resourceType() {
+        return CommentResource.class;
+    }
+
+    @Override
+    protected Class<CommentResource[]> resourceArrayType() {
+        return CommentResource[].class;
+    }
+
+    @Override
+    protected CommentPartialUpdate createPartialUpdateObject(CommentResource updates) {
+        return CommentPartialUpdate.builder()
+                .copyFromResource(updates)
                 .build();
     }
 
-    public CommentEntity getCommentById(Long id) {
-        //TODO: remove mock and implement
-        return CommentEntity.builder()
-                .id(id)
-                .build();
-    }
-
-    /*
-     Ideally, here we should have a proper argument type for searching comments
-     But, as we are short in time, this will be a temporary implementation, and we'll add it later on, if there
-     will be time enough
-     */
-    public List<CommentEntity> getCommentsByDetails(CommentEntity commentDetails) {
-        return List.of(commentDetails);
-    }
-
-    public CommentEntity updateComment(CommentEntity updatedComment) {
-        //TODO: remove mock and implement
-        return updatedComment;
-    }
-
-    public CommentEntity updateCommentPartially(CommentEntity updatedComment) {
-        //TODO: remove mock and implement
-        return updatedComment;
-    }
-
-    public CommentEntity deleteComment(Long id) {
-        //TODO: remove mock and implement
-        return CommentEntity.builder()
-                .id(id)
-                .build();
-    }
 }

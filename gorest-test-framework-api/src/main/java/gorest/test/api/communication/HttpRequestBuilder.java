@@ -1,13 +1,13 @@
-package gorest.test.api;
+package gorest.test.api.communication;
 
 import lombok.Getter;
-import org.apache.hc.core5.http.message.BasicHttpRequest;
+import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 import org.apache.hc.core5.net.URIBuilder;
 
 import java.net.URISyntaxException;
 
 @Getter
-public class HttpRequestBuilder<T extends BasicHttpRequest> {
+public class HttpRequestBuilder<T extends BasicClassicHttpRequest> {
     private final T request;
     private final URIBuilder urlBuilder;
 
@@ -26,13 +26,13 @@ public class HttpRequestBuilder<T extends BasicHttpRequest> {
         return this;
     }
 
-    public HttpRequestBuilder<T> pathElement(String pathElement) {
-        urlBuilder.setPath(urlBuilder.getPath() + "/" + pathElement);
+    public HttpRequestBuilder<T> pathSegment(String pathSegment) {
+        urlBuilder.setPath(urlBuilder.getPath() + "/" + pathSegment);
         return this;
     }
 
-    public HttpRequestBuilder<T> pathElement(Long pathElement) {
-        urlBuilder.setPath(urlBuilder.getPath() + "/" + pathElement);
+    public HttpRequestBuilder<T> pathSegment(Long pathSegment) {
+        urlBuilder.setPath(urlBuilder.getPath() + "/" + pathSegment);
         return this;
     }
 
@@ -46,8 +46,13 @@ public class HttpRequestBuilder<T extends BasicHttpRequest> {
         return this;
     }
 
-    public T build() throws URISyntaxException {
+    public Request<T, Void> build() throws URISyntaxException {
         request.setUri(urlBuilder.build());
-        return request;
+        return Request.withoutBody(request);
+    }
+
+    public <Body> Request<T, Body> build(Body httpRequestBody) throws URISyntaxException {
+        request.setUri(urlBuilder.build());
+        return Request.withBody(request, httpRequestBody);
     }
 }

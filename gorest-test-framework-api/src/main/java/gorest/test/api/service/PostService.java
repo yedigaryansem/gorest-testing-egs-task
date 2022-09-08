@@ -1,62 +1,37 @@
 package gorest.test.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gorest.test.api.RequestFactory;
-import gorest.test.core.model.PostEntity;
+import gorest.test.api.communication.RequestFactory;
+import gorest.test.core.model.PostPartialUpdate;
+import gorest.test.core.model.PostResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.net.URISyntaxException;
 
 @Component
-public class PostService extends ServiceBase {
-    long lastId = 0;
+public class PostService extends ResourceCrudServiceBase<PostResource, PostPartialUpdate> {
 
     @Autowired
-    public PostService(RequestFactory requestFactory, ObjectMapper objectMapper) {
-        super(requestFactory, objectMapper);
+    public PostService(RequestFactory baseRequestFactory,
+                       ObjectMapper objectMapper) throws URISyntaxException {
+        super(baseRequestFactory, objectMapper, PostResource.class);
     }
 
-    public PostEntity createNewPost(PostEntity newPost) {
-        //TODO: remove mock and implement
-        return PostEntity.builder()
-                .id(++lastId)
-                .authorId(newPost.getAuthorId())
-                .title(newPost.getTitle())
-                .body(newPost.getBody())
-                .build();
+    @Override
+    protected Class<PostResource> resourceType() {
+        return PostResource.class;
     }
 
-    public PostEntity getPostById(Long id) {
-        //TODO: remove mock and implement
-        return PostEntity.builder()
-                .id(id)
-                .build();
+    @Override
+    protected Class<PostResource[]> resourceArrayType() {
+        return PostResource[].class;
     }
 
-    /*
-     Ideally, here we should have a proper argument type for searching posts
-     But, as we are short in time, this will be a temporary implementation, and we'll add it later on, if there
-     will be time enough
-     */
-    public List<PostEntity> getPostsByDetails(PostEntity postDetails) {
-        return List.of(postDetails);
-    }
-
-    public PostEntity updatePost(PostEntity updatedPost) {
-        //TODO: remove mock and implement
-        return updatedPost;
-    }
-
-    public PostEntity updatePostPartially(PostEntity updatedPost) {
-        //TODO: remove mock and implement
-        return updatedPost;
-    }
-
-    public PostEntity deletePost(Long id) {
-        //TODO: remove mock and implement
-        return PostEntity.builder()
-                .id(id)
+    @Override
+    protected PostPartialUpdate createPartialUpdateObject(PostResource updates) {
+        return PostPartialUpdate.builder()
+                .copyFromResource(updates)
                 .build();
     }
 }
