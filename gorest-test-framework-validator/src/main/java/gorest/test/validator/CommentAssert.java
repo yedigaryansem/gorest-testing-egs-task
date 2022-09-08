@@ -1,6 +1,6 @@
 package gorest.test.validator;
 
-import gorest.test.core.model.CommentEntity;
+import gorest.test.core.model.CommentResource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.assertj.core.api.LongAssert;
@@ -8,8 +8,8 @@ import org.assertj.core.api.StringAssert;
 
 @AllArgsConstructor
 @Getter
-public class CommentAssert extends SoftAsserter<CommentEntity> {
-    private CommentEntity target;
+public class CommentAssert extends SoftAsserter<CommentResource> {
+    private CommentResource target;
 
     public LongAssert id() {
         return new LongAssert(target.getId());
@@ -31,7 +31,7 @@ public class CommentAssert extends SoftAsserter<CommentEntity> {
         return new StringAssert(target.getBody());
     }
 
-    public CommentAssert assertEqualsTo(CommentEntity expected) {
+    public CommentAssert assertEqualsTo(CommentResource expected) {
         id().isEqualTo(expected.getId());
         postId().isEqualTo(expected.getPostId());
         name().isEqualTo(expected.getName());

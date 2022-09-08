@@ -1,6 +1,6 @@
 package gorest.test.validator;
 
-import gorest.test.core.model.UserEntity;
+import gorest.test.core.model.UserResource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.assertj.core.api.LongAssert;
@@ -8,8 +8,8 @@ import org.assertj.core.api.StringAssert;
 
 @AllArgsConstructor
 @Getter
-public class UserAssert extends SoftAsserter<UserEntity> {
-    private final UserEntity target;
+public class UserAssert extends SoftAsserter<UserResource> {
+    private final UserResource target;
 
     public LongAssert id() {
         return new LongAssert(target.getId());
@@ -31,7 +31,7 @@ public class UserAssert extends SoftAsserter<UserEntity> {
         return new StringAssert(target.getStatus());
     }
 
-    public UserAssert assertEqualsTo(UserEntity expected) {
+    public UserAssert assertEqualsTo(UserResource expected) {
         id().isEqualTo(expected.getId());
         name().isEqualTo(expected.getName());
         email().isEqualTo(expected.getEmail());
