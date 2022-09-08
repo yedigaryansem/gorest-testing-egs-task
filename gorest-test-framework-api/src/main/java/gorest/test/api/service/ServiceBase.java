@@ -2,10 +2,16 @@ package gorest.test.api.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import gorest.test.api.communication.ApiError;
 import gorest.test.api.communication.BasicResponse;
+import gorest.test.api.exception.response.ApiErrorResponseException;
+import gorest.test.api.communication.FieldValueApiError;
+import gorest.test.api.exception.response.ApiFieldValueErrorResponseException;
 import gorest.test.api.communication.Request;
 import gorest.test.api.communication.RequestFactory;
 import gorest.test.api.communication.Response;
+import gorest.test.api.exception.CannotConvertJsonToObjectException;
 import gorest.test.api.exception.ObjectToJsonConversionException;
 import gorest.test.api.extension.JsonStringEntity;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +21,8 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 
 import java.io.IOException;
@@ -37,7 +45,7 @@ public class ServiceBase implements AutoCloseable {
      * @throws IOException if the request cannot be executed, see {@link CloseableHttpClient#execute(ClassicHttpRequest)} for details
      */
     public <ResponseBody, RequestMethod extends BasicClassicHttpRequest>
-    Response<ResponseBody> execute(Request<RequestMethod> request, Class<ResponseBody> objectClass) throws IOException {
+    Response<ResponseBody> execute(Request<RequestMethod> request, Class<ResponseBody> objectClass) throws IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
         RequestMethod httpRequest = prepareRequest(request);
         final CloseableHttpResponse response = httpClient.execute(httpRequest);
         return prepareResponse(response, objectClass);
@@ -80,9 +88,10 @@ public class ServiceBase implements AutoCloseable {
         }
     }
 
-    private <ResponseBody> Response<ResponseBody> prepareResponse(CloseableHttpResponse response, Class<ResponseBody> objectClass) throws IOException {
+    private <ResponseBody> Response<ResponseBody> prepareResponse(CloseableHttpResponse response, Class<ResponseBody> objectClass) throws IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
         final HttpEntity entity = response.getEntity();
-        final ResponseBody object = objectMapper.readValue(entity.getContent(), objectClass);
+        String responseJson = EntityUtils.toString(entity);
+        final ResponseBody object = deserializeResponse(objectClass, responseJson);
         final var responseBuilder = Response.<ResponseBody>builder()
                 .resource(object)
                 .statusCode(response.getCode());
@@ -90,6 +99,25 @@ public class ServiceBase implements AutoCloseable {
             responseBuilder.header(header.getName(), header.getValue());
         }
         return responseBuilder.build();
+    }
+
+    private <ResponseBody> ResponseBody deserializeResponse(Class<ResponseBody> objectClass, String responseJson) throws JsonProcessingException, ApiErrorResponseException, ApiFieldValueErrorResponseException {
+        try {
+            return objectMapper.readValue(responseJson, objectClass);
+        } catch (MismatchedInputException objectParsingException) {
+            try {
+                ApiError apiError = objectMapper.readValue(responseJson, ApiError.class);
+                throw new ApiErrorResponseException(apiError);
+            } catch (MismatchedInputException errorParsingException) {
+                try {
+                    FieldValueApiError[] fieldErrors = objectMapper.readValue(responseJson, FieldValueApiError[].class);
+                    throw new ApiFieldValueErrorResponseException(fieldErrors);
+                } catch (MismatchedInputException ignored) {
+                }
+            }
+
+        }
+        throw new CannotConvertJsonToObjectException("Cannot deserialize response to valid type or to any known error type: " + responseJson);
     }
 
     private <RequestMethod extends BasicClassicHttpRequest>
