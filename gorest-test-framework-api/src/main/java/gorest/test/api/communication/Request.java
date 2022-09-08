@@ -10,20 +10,20 @@ import java.util.Optional;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class Request<R extends BasicClassicHttpRequest, Body> {
+public class Request<R extends BasicClassicHttpRequest> {
     @NonNull
     private final R httpRequest;
-    private final Body bodyObject;
+    private final Object bodyObject;
 
-    public static <R extends BasicClassicHttpRequest> Request<R, Void> withoutBody(R httpRequest) {
+    public static <R extends BasicClassicHttpRequest> Request<R> withoutBody(R httpRequest) {
         return new Request<>(httpRequest, null);
     }
 
-    public static <R extends BasicClassicHttpRequest, Body> Request<R, Body> withBody(R httpRequest, Body bodyObject) {
+    public static <R extends BasicClassicHttpRequest> Request<R> withBody(R httpRequest, Object bodyObject) {
         return new Request<>(httpRequest, bodyObject);
     }
 
-    public Optional<Body> getBodyObject() {
+    public Optional<Object> getBodyObject() {
         return Optional.ofNullable(bodyObject);
     }
 }

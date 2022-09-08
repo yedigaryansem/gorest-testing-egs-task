@@ -36,15 +36,15 @@ public class ServiceBase implements AutoCloseable {
      * @return an object, that contains info about the response HTTP details (headers, status code) and deserialized object from the body of that response
      * @throws IOException if the request cannot be executed, see {@link CloseableHttpClient#execute(ClassicHttpRequest)} for details
      */
-    public <ResponseBody, RequestBody, RequestMethod extends BasicClassicHttpRequest>
-    Response<ResponseBody> execute(Request<RequestMethod, RequestBody> request, Class<ResponseBody> objectClass) throws IOException {
+    public <ResponseBody, RequestMethod extends BasicClassicHttpRequest>
+    Response<ResponseBody> execute(Request<RequestMethod> request, Class<ResponseBody> objectClass) throws IOException {
         RequestMethod httpRequest = prepareRequest(request);
         final CloseableHttpResponse response = httpClient.execute(httpRequest);
         return prepareResponse(response, objectClass);
     }
 
-    public <RequestBody, RequestMethod extends BasicClassicHttpRequest>
-    BasicResponse execute(Request<RequestMethod, RequestBody> request) throws IOException {
+    public <RequestMethod extends BasicClassicHttpRequest>
+    BasicResponse execute(Request<RequestMethod> request) throws IOException {
         RequestMethod httpRequest = prepareRequest(request);
         final CloseableHttpResponse response = httpClient.execute(httpRequest);
         final var responseBuilder = BasicResponse.basicBuilder()
@@ -92,8 +92,8 @@ public class ServiceBase implements AutoCloseable {
         return responseBuilder.build();
     }
 
-    private <RequestMethod extends BasicClassicHttpRequest, RequestBody>
-    RequestMethod prepareRequest(Request<RequestMethod, RequestBody> request) throws ObjectToJsonConversionException {
+    private <RequestMethod extends BasicClassicHttpRequest>
+    RequestMethod prepareRequest(Request<RequestMethod> request) throws ObjectToJsonConversionException {
         RequestMethod httpRequest = request.getHttpRequest();
         request.getBodyObject()
                 .map(this::toJsonString)

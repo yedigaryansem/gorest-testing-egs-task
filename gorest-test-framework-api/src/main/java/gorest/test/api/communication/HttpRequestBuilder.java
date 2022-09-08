@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 public class HttpRequestBuilder<T extends BasicClassicHttpRequest> {
     private final T request;
     private final URIBuilder urlBuilder;
+    private Object requestBody;
 
     public HttpRequestBuilder(T emptyRequest) throws URISyntaxException {
         this.request = emptyRequest;
@@ -46,13 +47,16 @@ public class HttpRequestBuilder<T extends BasicClassicHttpRequest> {
         return this;
     }
 
-    public Request<T, Void> build() throws URISyntaxException {
-        request.setUri(urlBuilder.build());
-        return Request.withoutBody(request);
+    public HttpRequestBuilder<T> body(Object bodyObject) {
+        requestBody = bodyObject;
+        return this;
     }
 
-    public <Body> Request<T, Body> build(Body httpRequestBody) throws URISyntaxException {
+    public Request<T> build() throws URISyntaxException {
         request.setUri(urlBuilder.build());
-        return Request.withBody(request, httpRequestBody);
+        if (requestBody == null) {
+            Request.withoutBody(request);
+        }
+        return Request.withBody(request, requestBody);
     }
 }

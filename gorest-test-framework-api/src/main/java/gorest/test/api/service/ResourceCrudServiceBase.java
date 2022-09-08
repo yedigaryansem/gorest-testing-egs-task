@@ -25,7 +25,8 @@ public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
 
     public Response<T> createNewResource(T newResource) throws URISyntaxException, IOException {
         var newResourceCreationRequest = requestFactory().post()
-                .build(newResource);
+                .body(newResource)
+                .build();
         return execute(newResourceCreationRequest, resourceType());
     }
 
@@ -47,7 +48,8 @@ public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
     public Response<T> updateResource(Long targetResourceId, T updates) throws URISyntaxException, IOException {
         var updateResourceRequest = requestFactory().put()
                 .pathSegment(targetResourceId)
-                .build(updates);
+                .body(updates)
+                .build();
         return execute(updateResourceRequest, resourceType());
 
     }
@@ -56,7 +58,8 @@ public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
         P partialUpdate = createPartialUpdateObject(updates);
         var updateResourceRequest = requestFactory().put()
                 .pathSegment(targetResourceId)
-                .build(partialUpdate);
+                .body(partialUpdate)
+                .build();
         return execute(updateResourceRequest, resourceType());
     }
 
