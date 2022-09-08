@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import gorest.test.api.communication.ApiError;
 import gorest.test.api.communication.BasicResponse;
-import gorest.test.api.exception.response.ApiErrorResponseException;
 import gorest.test.api.communication.FieldValueApiError;
-import gorest.test.api.exception.response.ApiFieldValueErrorResponseException;
 import gorest.test.api.communication.Request;
 import gorest.test.api.communication.RequestFactory;
 import gorest.test.api.communication.Response;
 import gorest.test.api.exception.CannotConvertJsonToObjectException;
 import gorest.test.api.exception.ObjectToJsonConversionException;
+import gorest.test.api.exception.response.ApiErrorResponseException;
+import gorest.test.api.exception.response.ApiFieldValueErrorResponseException;
 import gorest.test.api.extension.JsonStringEntity;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -88,30 +88,34 @@ public class ServiceBase implements AutoCloseable {
         }
     }
 
-    private <ResponseBody> Response<ResponseBody> prepareResponse(CloseableHttpResponse response, Class<ResponseBody> objectClass) throws IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
-        final HttpEntity entity = response.getEntity();
+    private <ResponseBody> Response<ResponseBody> prepareResponse(CloseableHttpResponse httpResponse, Class<ResponseBody> objectClass) throws IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
+        final HttpEntity entity = httpResponse.getEntity();
         String responseJson = EntityUtils.toString(entity);
-        final ResponseBody object = deserializeResponse(objectClass, responseJson);
+        final ResponseBody object = deserializeResponse(objectClass, responseJson, httpResponse);
+        return createResponse(httpResponse, object);
+    }
+
+    private static <ResponseBody> Response<ResponseBody> createResponse(CloseableHttpResponse httpResponse, ResponseBody object) {
         final var responseBuilder = Response.<ResponseBody>builder()
                 .resource(object)
-                .statusCode(response.getCode());
-        for (Header header : response.getHeaders()) {
+                .statusCode(httpResponse.getCode());
+        for (Header header : httpResponse.getHeaders()) {
             responseBuilder.header(header.getName(), header.getValue());
         }
         return responseBuilder.build();
     }
 
-    private <ResponseBody> ResponseBody deserializeResponse(Class<ResponseBody> objectClass, String responseJson) throws JsonProcessingException, ApiErrorResponseException, ApiFieldValueErrorResponseException {
+    private <ResponseBody> ResponseBody deserializeResponse(Class<ResponseBody> objectClass, String responseJson, CloseableHttpResponse httpResponse) throws JsonProcessingException, ApiErrorResponseException, ApiFieldValueErrorResponseException {
         try {
             return objectMapper.readValue(responseJson, objectClass);
         } catch (MismatchedInputException objectParsingException) {
             try {
                 ApiError apiError = objectMapper.readValue(responseJson, ApiError.class);
-                throw new ApiErrorResponseException(apiError);
+                throw new ApiErrorResponseException(createResponse(httpResponse, apiError));
             } catch (MismatchedInputException errorParsingException) {
                 try {
                     FieldValueApiError[] fieldErrors = objectMapper.readValue(responseJson, FieldValueApiError[].class);
-                    throw new ApiFieldValueErrorResponseException(fieldErrors);
+                    throw new ApiFieldValueErrorResponseException(createResponse(httpResponse, fieldErrors));
                 } catch (MismatchedInputException ignored) {
                 }
             }
