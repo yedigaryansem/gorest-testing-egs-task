@@ -1,6 +1,7 @@
 package gorest.test.api.communication;
 
 import lombok.Getter;
+import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 import org.apache.hc.core5.net.URIBuilder;
 
@@ -18,7 +19,7 @@ public class HttpRequestBuilder<T extends BasicClassicHttpRequest> {
     }
 
     public HttpRequestBuilder<T> bearerToken(String apiToken) {
-        request.addHeader("Authorization", "Bearer " + apiToken);
+        request.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiToken);
         return this;
     }
 
@@ -55,7 +56,7 @@ public class HttpRequestBuilder<T extends BasicClassicHttpRequest> {
     public Request<T> build() throws URISyntaxException {
         request.setUri(urlBuilder.build());
         if (requestBody == null) {
-            Request.withoutBody(request);
+            return Request.withoutBody(request);
         }
         return Request.withBody(request, requestBody);
     }

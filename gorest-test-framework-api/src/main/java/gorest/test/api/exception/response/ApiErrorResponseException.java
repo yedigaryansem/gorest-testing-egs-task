@@ -9,6 +9,7 @@ public class ApiErrorResponseException extends Exception {
     private final Response<ApiError> apiError;
 
     public ApiErrorResponseException(Response<ApiError> apiError) {
+        super("API ERROR: " + apiError.getResource().getMessage());
         this.apiError = apiError;
     }
 }

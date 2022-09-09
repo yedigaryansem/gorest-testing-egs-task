@@ -12,4 +12,12 @@ public class FieldValueApiError extends ApiError {
         super(message);
         this.field = field;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "field='" + field + "'\n" +
+                "message='" + getMessage() + "'" +
+                '}';
+    }
 }

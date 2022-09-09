@@ -11,8 +11,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CommentPartialUpdate extends CommentResource {
-    public abstract static class CommentPartialUpdateBuilder<C extends CommentPartialUpdate, B extends CommentPartialUpdateBuilder<C, B>>
+public class PartialCommentResource extends CommentResource {
+
+    /**
+     * An extension class for Lombok, to add custom methods to the builder.
+     */
+    public abstract static class PartialCommentResourceBuilder<C extends PartialCommentResource, B extends PartialCommentResourceBuilder<C, B>>
             extends CommentResourceBuilder<C, B> {
 
         public B copyFromResource(CommentResource source) {

@@ -2,7 +2,7 @@ package gorest.test.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gorest.test.api.communication.RequestFactory;
-import gorest.test.core.model.PostPartialUpdate;
+import gorest.test.core.model.PartialPostResource;
 import gorest.test.core.model.PostResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.net.URISyntaxException;
 
 @Component
-public class PostService extends ResourceCrudServiceBase<PostResource, PostPartialUpdate> {
+public class PostService extends ResourceCrudServiceBase<PostResource, PartialPostResource> {
 
     @Autowired
     public PostService(RequestFactory baseRequestFactory,
@@ -29,8 +29,8 @@ public class PostService extends ResourceCrudServiceBase<PostResource, PostParti
     }
 
     @Override
-    protected PostPartialUpdate createPartialUpdateObject(PostResource updates) {
-        return PostPartialUpdate.builder()
+    protected PartialPostResource createPartialUpdateObject(PostResource updates) {
+        return PartialPostResource.builder()
                 .copyFromResource(updates)
                 .build();
     }

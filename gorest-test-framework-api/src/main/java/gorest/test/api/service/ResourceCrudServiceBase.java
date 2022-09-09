@@ -17,6 +17,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
 
+/**
+ *
+ * @param <T> the java-type of the resource that is being sent and received by this service
+ * @param <P> the java-type of the resource that is used for partial updates
+ */
 @Component
 public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
     @Autowired

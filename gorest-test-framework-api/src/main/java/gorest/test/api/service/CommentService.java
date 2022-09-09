@@ -2,7 +2,7 @@ package gorest.test.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gorest.test.api.communication.RequestFactory;
-import gorest.test.core.model.CommentPartialUpdate;
+import gorest.test.core.model.PartialCommentResource;
 import gorest.test.core.model.CommentResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.net.URISyntaxException;
 
 @Component
-public class CommentService extends ResourceCrudServiceBase<CommentResource, CommentPartialUpdate> {
+public class CommentService extends ResourceCrudServiceBase<CommentResource, PartialCommentResource> {
 
     @Autowired
     public CommentService(RequestFactory baseRequestFactory,
@@ -29,8 +29,8 @@ public class CommentService extends ResourceCrudServiceBase<CommentResource, Com
     }
 
     @Override
-    protected CommentPartialUpdate createPartialUpdateObject(CommentResource updates) {
-        return CommentPartialUpdate.builder()
+    protected PartialCommentResource createPartialUpdateObject(CommentResource updates) {
+        return PartialCommentResource.builder()
                 .copyFromResource(updates)
                 .build();
     }

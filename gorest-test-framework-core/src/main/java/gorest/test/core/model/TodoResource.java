@@ -13,10 +13,11 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @HttpResourcePath("todos")
@@ -57,7 +58,7 @@ public class TodoResource {
         }
 
         public B dueDate(ZonedDateTime dueDate) {
-            this.dueDate = dueDate.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            this.dueDate = dueDate.truncatedTo(ChronoUnit.MILLIS).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
             return self();
         }
 

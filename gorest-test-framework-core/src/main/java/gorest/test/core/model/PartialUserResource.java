@@ -11,8 +11,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserPartialUpdate extends UserResource {
-    public abstract static class UserPartialUpdateBuilder<C extends UserPartialUpdate, B extends UserPartialUpdateBuilder<C, B>>
+public class PartialUserResource extends UserResource {
+
+    /**
+     * An extension class for Lombok, to add custom methods to the builder.
+     */
+    public abstract static class PartialUserResourceBuilder<C extends PartialUserResource, B extends PartialUserResourceBuilder<C, B>>
             extends UserResourceBuilder<C, B> {
 
         public B copyFromResource(UserResource source) {

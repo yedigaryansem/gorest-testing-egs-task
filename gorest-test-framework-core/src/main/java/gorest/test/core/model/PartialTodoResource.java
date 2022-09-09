@@ -11,12 +11,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TodoPartialUpdate extends TodoResource {
+public class PartialTodoResource extends TodoResource {
 
     /**
-     * An extension class for Lombok, to add our custom date time setter to the builder.
+     * An extension class for Lombok, to add custom methods to the builder.
      */
-    public abstract static class TodoPartialUpdateBuilder<C extends TodoPartialUpdate, B extends TodoPartialUpdateBuilder<C, B>>
+    public abstract static class PartialTodoResourceBuilder<C extends PartialTodoResource, B extends PartialTodoResourceBuilder<C, B>>
             extends TodoResourceBuilder<C, B> {
 
         public B copyFromResource(TodoResource source) {
