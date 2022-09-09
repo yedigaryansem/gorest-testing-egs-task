@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.net.URISyntaxException;
 
 @Component
-public class UserService extends ResourceCrudServiceBase<UserResource, PartialUserResource> {
+public class UserService extends ResourceCrudServiceBase<UserResource> {
     @Autowired
     public UserService(RequestFactory baseRequestFactory,
                        ObjectMapper objectMapper) throws URISyntaxException {

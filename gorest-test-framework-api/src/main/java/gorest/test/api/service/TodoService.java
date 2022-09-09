@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.net.URISyntaxException;
 
 @Component
-public class TodoService extends ResourceCrudServiceBase<TodoResource, PartialTodoResource> {
+public class TodoService extends ResourceCrudServiceBase<TodoResource> {
     @Autowired
     public TodoService(RequestFactory baseRequestFactory,
                        ObjectMapper objectMapper) throws URISyntaxException {

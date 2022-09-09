@@ -11,12 +11,12 @@ import org.assertj.core.api.StringAssert;
 public class CommentAssert extends SoftAsserter<CommentResource> {
     private CommentResource target;
 
-    public LongAssert id() {
-        return new LongAssert(target.getId());
+    public StringAssert id() {
+        return new StringAssert(target.getId());
     }
 
-    public LongAssert postId() {
-        return new LongAssert(target.getPostId());
+    public StringAssert postId() {
+        return new StringAssert(target.getPostId());
     }
 
     public StringAssert name() {

@@ -5,7 +5,6 @@ import gorest.test.core.constants.TodoStatus;
 import gorest.test.core.metadata.HttpResourcePath;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,13 +20,12 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @HttpResourcePath("todos")
-public class TodoResource {
-    @Builder.Default
+public class TodoResource implements ApiResource {
     @JsonProperty("id")
-    private Long id = null;
+    private String id;
 
     @JsonProperty("user_id")
-    private Long authorId;
+    private String authorId;
 
     @JsonProperty("title")
     private String title;

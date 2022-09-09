@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import gorest.test.core.metadata.HttpResourcePath;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,10 +15,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @HttpResourcePath("posts")
-public class PostResource {
-    @Builder.Default
+public class PostResource implements ApiResource {
     @JsonProperty("id")
-    private Long id = null;
+    private String id;
 
     @JsonProperty("user_id")
     private Long authorId;

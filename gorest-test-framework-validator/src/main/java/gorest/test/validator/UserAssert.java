@@ -3,7 +3,6 @@ package gorest.test.validator;
 import gorest.test.core.model.UserResource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.assertj.core.api.LongAssert;
 import org.assertj.core.api.StringAssert;
 
 @AllArgsConstructor
@@ -11,8 +10,8 @@ import org.assertj.core.api.StringAssert;
 public class UserAssert extends SoftAsserter<UserResource> {
     private final UserResource target;
 
-    public LongAssert id() {
-        return new LongAssert(target.getId());
+    public StringAssert id() {
+        return new StringAssert(target.getId());
     }
 
     public StringAssert name() {

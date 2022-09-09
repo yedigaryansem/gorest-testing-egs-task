@@ -6,7 +6,6 @@ import gorest.test.core.constants.UserStatus;
 import gorest.test.core.metadata.HttpResourcePath;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,10 +17,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @HttpResourcePath("users")
-public class UserResource {
-    @Builder.Default
+public class UserResource implements ApiResource {
     @JsonProperty("id")
-    private Long id = null;
+    private String id;
 
     @JsonProperty("name")
     private String name;
@@ -34,6 +32,17 @@ public class UserResource {
 
     @JsonProperty("status")
     private String status;
+
+    @Override
+    public String toString() {
+        return "UserResource{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 
     /**
      * An extension class for Lombok, to add our custom methods to the builder.

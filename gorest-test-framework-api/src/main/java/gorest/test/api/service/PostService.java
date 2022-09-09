@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.net.URISyntaxException;
 
 @Component
-public class PostService extends ResourceCrudServiceBase<PostResource, PartialPostResource> {
+public class PostService extends ResourceCrudServiceBase<PostResource> {
 
     @Autowired
     public PostService(RequestFactory baseRequestFactory,

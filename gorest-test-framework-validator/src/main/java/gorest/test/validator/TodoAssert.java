@@ -3,7 +3,6 @@ package gorest.test.validator;
 import gorest.test.core.model.TodoResource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.assertj.core.api.LongAssert;
 import org.assertj.core.api.StringAssert;
 
 @AllArgsConstructor
@@ -11,12 +10,12 @@ import org.assertj.core.api.StringAssert;
 public class TodoAssert extends SoftAsserter<TodoResource> {
     private final TodoResource target;
 
-    public LongAssert id() {
-        return new LongAssert(target.getId());
+    public StringAssert id() {
+        return new StringAssert(target.getId());
     }
 
-    public LongAssert authorId() {
-        return new LongAssert(target.getAuthorId());
+    public StringAssert authorId() {
+        return new StringAssert(target.getAuthorId());
     }
 
     public StringAssert title() {

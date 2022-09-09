@@ -31,6 +31,7 @@
         <org.projectlombok.lombok.version>1.18.24</org.projectlombok.lombok.version>
         <org.springframework.boot.spring-boot-dependencies>2.7.3</org.springframework.boot.spring-boot-dependencies>
         <com.fasterxml.jackson.core.jackson-databind.version>2.13.4</com.fasterxml.jackson.core.jackson-databind.version>
+        <org.testng.testng.version>7.6.1</org.testng.testng.version>
     </properties>
 
     <dependencyManagement>
@@ -44,6 +45,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 </project>

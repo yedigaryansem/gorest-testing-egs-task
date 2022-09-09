@@ -20,15 +20,19 @@ import java.util.Map;
 /**
  *
  * @param <T> the java-type of the resource that is being sent and received by this service
- * @param <P> the java-type of the resource that is used for partial updates
  */
 @Component
-public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
+public abstract class ResourceCrudServiceBase<T> extends ServiceBase {
     @Autowired
     public ResourceCrudServiceBase(RequestFactory baseRequestFactory,
                                    ObjectMapper objectMapper,
                                    Class<T> resourceType) throws URISyntaxException {
         super(baseRequestFactory.withAppendedBaseUrl(ResourceUtils.extractPathSegment(resourceType)), objectMapper);
+    }
+
+    public Response<T[]> getAllResources() throws URISyntaxException, ApiErrorResponseException, IOException, ParseException, ApiFieldValueErrorResponseException {
+        var getAllResourcesRequest = requestFactory().get().build();
+        return execute(getAllResourcesRequest, resourceArrayType());
     }
 
     public Response<T> createNewResource(T newResource) throws URISyntaxException, IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
@@ -38,7 +42,7 @@ public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
         return execute(newResourceCreationRequest, resourceType());
     }
 
-    public Response<T> getResourceById(Long id) throws URISyntaxException, IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
+    public Response<T> getResourceById(String id) throws URISyntaxException, IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
         var getResourceRequest = requestFactory().get()
                 .pathSegment(id)
                 .build();
@@ -53,7 +57,7 @@ public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
         return execute(getResourcesRequest, resourceArrayType());
     }
 
-    public Response<T> updateResource(Long targetResourceId, T updates) throws URISyntaxException, IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
+    public Response<T> updateResource(String targetResourceId, T updates) throws URISyntaxException, IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
         var updateResourceRequest = requestFactory().put()
                 .pathSegment(targetResourceId)
                 .body(updates)
@@ -61,8 +65,8 @@ public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
         return execute(updateResourceRequest, resourceType());
     }
 
-    public Response<T> updateResourcePartially(Long targetResourceId, T updates) throws URISyntaxException, IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
-        P partialUpdate = createPartialUpdateObject(updates);
+    public Response<T> updateResourcePartially(String targetResourceId, T updates) throws URISyntaxException, IOException, ParseException, ApiFieldValueErrorResponseException, ApiErrorResponseException {
+        Object partialUpdate = createPartialUpdateObject(updates);
         var updateResourceRequest = requestFactory().put()
                 .pathSegment(targetResourceId)
                 .body(partialUpdate)
@@ -70,7 +74,7 @@ public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
         return execute(updateResourceRequest, resourceType());
     }
 
-    public BasicResponse deleteResource(Long id) throws URISyntaxException, IOException {
+    public BasicResponse deleteResource(String id) throws URISyntaxException, IOException {
         var deleteResourceRequest = requestFactory().delete()
                 .pathSegment(id)
                 .build();
@@ -81,5 +85,5 @@ public abstract class ResourceCrudServiceBase<T, P> extends ServiceBase {
 
     protected abstract Class<T[]> resourceArrayType();
 
-    protected abstract P createPartialUpdateObject(T updates);
+    protected abstract Object createPartialUpdateObject(T updates);
 }

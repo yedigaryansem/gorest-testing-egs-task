@@ -11,11 +11,11 @@
     <artifactId>gorest-test-automation</artifactId>
 
     <dependencies>
+        <!--Dependencies from inner modules-->
         <dependency>
             <groupId>gorest.test</groupId>
             <artifactId>gorest-test-framework-api</artifactId>
             <version>${gorest.test.framework.api.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>gorest.test</groupId>
@@ -23,21 +23,32 @@
             <version>${gorest.test.framework.validator.version}</version>
         </dependency>
 
+        <!--
+            Dependencies which versions are controlled by Spring's
+            dependency manager (org.springframework.boot.spring-boot-dependencies)
+        -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.6.1</version>
+            <version>${org.testng.testng.version}</version>
         </dependency>
     </dependencies>
 

@@ -11,8 +11,8 @@ import org.assertj.core.api.StringAssert;
 public class PostAssert extends SoftAsserter<PostResource> {
     private final PostResource target;
 
-    public LongAssert id() {
-        return new LongAssert(target.getId());
+    public StringAssert id() {
+        return new StringAssert(target.getId());
     }
 
     public LongAssert authorId() {

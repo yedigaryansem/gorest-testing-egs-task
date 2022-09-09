@@ -9,19 +9,19 @@ import gorest.test.core.model.UserResource;
  * A factory class, that helps to easily create validators for the business logic objects.
  */
 public interface Assertion {
-    static UserAssert of(UserResource targetUser) {
-        return new UserAssert(targetUser);
+    static UserAssert of(UserResource actualUser) {
+        return new UserAssert(actualUser);
     }
 
-    static PostAssert of(PostResource targetPost) {
-        return new PostAssert(targetPost);
+    static PostAssert of(PostResource actualPost) {
+        return new PostAssert(actualPost);
     }
 
-    static CommentAssert of(CommentResource targetComment) {
-        return new CommentAssert(targetComment);
+    static CommentAssert of(CommentResource actualComment) {
+        return new CommentAssert(actualComment);
     }
 
-    static TodoAssert of(TodoResource targetTodo) {
-        return new TodoAssert(targetTodo);
+    static TodoAssert of(TodoResource actualTodo) {
+        return new TodoAssert(actualTodo);
     }
 }
