@@ -1,0 +1,46 @@
+INSERT INTO user_test_data(test_type, test_operation, name, email, gender, status)
+VALUES ('POSITIVE', 'CREATE', 'positive_name', 'positive@email.com', 'male', 'active'),
+       ('POSITIVE', 'CREATE', 'Sam Yedigaryan', 'sy@mail.com', 'male', 'active'),
+       ('POSITIVE', 'CREATE', 'Aaaaaaaaaaaaa', 'a@email.com', 'female', 'inactive'),
+       ('POSITIVE', 'CREATE', 'a a a a', 'aa@email.com', 'male', 'inactive'),
+       ('POSITIVE', 'CREATE', 'positive_name', 'positive@email.com', 'male', 'active'),
+       ('POSITIVE', 'CREATE', '1', '1@email.com', 'female', 'active'),
+       ('POSITIVE', 'CREATE', 'A 1', 'a1@email.com', 'male', 'active'),
+       ('POSITIVE', 'CREATE', '1 1', '11@email.com', 'female', 'active'),
+
+       ('NEGATIVE', 'CREATE', '', 'blank@email.com', 'male', 'active'),
+       ('NEGATIVE', 'CREATE', ' ', 'space@email.com', 'none', 'active'),
+       ('NEGATIVE', 'CREATE', 'Alex', '', 'male', 'active'),
+       ('NEGATIVE', 'CREATE', 'Alex', 'invalidMail', 'male', 'active'),
+       ('NEGATIVE', 'CREATE', 'Alex', 'invalidMail.com', 'male', 'active'),
+       ('NEGATIVE', 'CREATE', 'Alex', ' ', 'male', 'active'),
+       ('NEGATIVE', 'CREATE', 'Alex', 'Alex@email.com', 'male', 'unknown'),
+       ('NEGATIVE', 'CREATE', '', '', 'male', 'active'),
+       ('NEGATIVE', 'CREATE', '', '', '', 'active'),
+       ('NEGATIVE', 'CREATE', '', '', '', ''),
+       ('NEGATIVE', 'CREATE', ' ', ' ', ' ', ' '),
+
+       ('POSITIVE', 'UPDATE', 'UpdatedName', '0', '0', '0'),
+       ('POSITIVE', 'UPDATE', '0', 'updatedMail@mail.com', '0', '0'),
+       ('POSITIVE', 'UPDATE', '0', '0', 'male', '0'),
+       ('POSITIVE', 'UPDATE', '0', '0', '0', 'inactive'),
+       ('POSITIVE', 'UPDATE', 'xUpdatedName', 'xupdatedMail@mail.com', 'female', 'inactive'),
+
+       ('NEGATIVE', 'UPDATE', '', '0', '0', '0'),
+       ('NEGATIVE', 'UPDATE', '0', 'invalidMail', '0', '0'),
+       ('NEGATIVE', 'UPDATE', '0', '0', 'none', '0'),
+       ('NEGATIVE', 'UPDATE', '0', '0', '0', 'unknown'),
+       ('NEGATIVE', 'UPDATE', '', 'invalidMail', 'none', 'unknown'),
+
+       ('POSITIVE', 'PARTIAL_UPDATE', 'UpdatedName', '0', '0', '0'),
+       ('POSITIVE', 'PARTIAL_UPDATE', '0', 'updatedMail@mail.com', '0', '0'),
+       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', 'male', '0'),
+       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', '0', 'inactive'),
+       ('POSITIVE', 'PARTIAL_UPDATE', 'xUpdatedName', 'xupdatedMail@mail.com', 'female', 'inactive'),
+
+       ('POSITIVE', 'PARTIAL_UPDATE', 'UpdatedName', '0', '0', '0'),
+       ('POSITIVE', 'PARTIAL_UPDATE', '0', 'updatedMail@mail.com', '0', '0'),
+       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', 'male', '0'),
+       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', '0', 'inactive'),
+       ('POSITIVE', 'PARTIAL_UPDATE', 'xUpdatedName', 'xupdatedMail@mail.com', 'female', 'inactive')
+;
