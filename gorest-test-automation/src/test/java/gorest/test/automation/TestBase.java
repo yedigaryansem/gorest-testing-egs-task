@@ -15,8 +15,8 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 @TestPropertySource(locations = "classpath:application.properties")
 @Import(JpaSpringConfiguration.class)
 public class TestBase extends AbstractTestNGSpringContextTests {
-    public static final String SPRING_CONTEXT_BEFORE_CLASS = "springTestContextPrepareTestInstance";
-    public static final String SPRING_CONTEXT_BEFORE_METHOD = "springTestContextBeforeTestMethod";
-    public static final String SPRING_CONTEXT_AFTER_CLASS = "springTestContextAfterTestClass";
-    public static final String SPRING_CONTEXT_AFTER_METHOD = "springTestContextAfterTestMethod";
+    public static final String SPRING_CONTEXT_INIT_BEFORE_CLASS = "springTestContextPrepareTestInstance";
+    public static final String SPRING_CONTEXT_INIT_BEFORE_METHOD = "springTestContextBeforeTestMethod";
+    public static final String SPRING_CONTEXT_INIT_AFTER_CLASS = "springTestContextAfterTestClass";
+    public static final String SPRING_CONTEXT_INIT_AFTER_METHOD = "springTestContextAfterTestMethod";
 }

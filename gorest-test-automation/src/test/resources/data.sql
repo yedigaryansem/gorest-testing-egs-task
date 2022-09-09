@@ -3,7 +3,6 @@ VALUES ('POSITIVE', 'CREATE', 'positive_name', 'positive@email.com', 'male', 'ac
        ('POSITIVE', 'CREATE', 'Sam Yedigaryan', 'sy@mail.com', 'male', 'active'),
        ('POSITIVE', 'CREATE', 'Aaaaaaaaaaaaa', 'a@email.com', 'female', 'inactive'),
        ('POSITIVE', 'CREATE', 'a a a a', 'aa@email.com', 'male', 'inactive'),
-       ('POSITIVE', 'CREATE', 'positive_name', 'positive@email.com', 'male', 'active'),
        ('POSITIVE', 'CREATE', '1', '1@email.com', 'female', 'active'),
        ('POSITIVE', 'CREATE', 'A 1', 'a1@email.com', 'male', 'active'),
        ('POSITIVE', 'CREATE', '1 1', '11@email.com', 'female', 'active'),
@@ -32,15 +31,15 @@ VALUES ('POSITIVE', 'CREATE', 'positive_name', 'positive@email.com', 'male', 'ac
        ('NEGATIVE', 'UPDATE', '0', '0', '0', 'unknown'),
        ('NEGATIVE', 'UPDATE', '', 'invalidMail', 'none', 'unknown'),
 
-       ('POSITIVE', 'PARTIAL_UPDATE', 'UpdatedName', '0', '0', '0'),
-       ('POSITIVE', 'PARTIAL_UPDATE', '0', 'updatedMail@mail.com', '0', '0'),
-       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', 'male', '0'),
-       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', '0', 'inactive'),
-       ('POSITIVE', 'PARTIAL_UPDATE', 'xUpdatedName', 'xupdatedMail@mail.com', 'female', 'inactive'),
+       ('POSITIVE', 'PARTIAL_UPDATE', 'UpdatedName', null, null, null),
+       ('POSITIVE', 'PARTIAL_UPDATE', null, 'pupdatedMail@mail.com', null, null),
+       ('POSITIVE', 'PARTIAL_UPDATE', null, null, 'male', null),
+       ('POSITIVE', 'PARTIAL_UPDATE', null, null, null, 'inactive'),
+       ('POSITIVE', 'PARTIAL_UPDATE', 'xUpdatedName', 'xpupdatedMail@mail.com', 'female', 'inactive'),
 
-       ('POSITIVE', 'PARTIAL_UPDATE', 'UpdatedName', '0', '0', '0'),
-       ('POSITIVE', 'PARTIAL_UPDATE', '0', 'updatedMail@mail.com', '0', '0'),
-       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', 'male', '0'),
-       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', '0', 'inactive'),
-       ('POSITIVE', 'PARTIAL_UPDATE', 'xUpdatedName', 'xupdatedMail@mail.com', 'female', 'inactive')
+       ('NEGATIVE', 'PARTIAL_UPDATE', '', null, null, null),
+       ('NEGATIVE', 'PARTIAL_UPDATE', null, 'invalidMail', null, null),
+       ('NEGATIVE', 'PARTIAL_UPDATE', null, null, 'none', null),
+       ('NEGATIVE', 'PARTIAL_UPDATE', null, null, null, 'unknown'),
+       ('NEGATIVE', 'PARTIAL_UPDATE', '', 'invalidMail', 'none', 'unknown')
 ;
