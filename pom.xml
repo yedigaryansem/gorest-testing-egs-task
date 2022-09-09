@@ -32,6 +32,9 @@
         <org.springframework.boot.spring-boot-dependencies>2.7.3</org.springframework.boot.spring-boot-dependencies>
         <com.fasterxml.jackson.core.jackson-databind.version>2.13.4</com.fasterxml.jackson.core.jackson-databind.version>
         <org.testng.testng.version>7.6.1</org.testng.testng.version>
+        <io.cucumber.cucumber-spring.version>7.7.0</io.cucumber.cucumber-spring.version>
+        <io.cucumber.cucumber-java.version>7.7.0</io.cucumber.cucumber-java.version>
+        <io.cucumber.cucumber-junit.version>7.7.0</io.cucumber.cucumber-junit.version>
     </properties>
 
     <dependencyManagement>
