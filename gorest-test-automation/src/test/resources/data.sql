@@ -43,3 +43,41 @@ VALUES ('POSITIVE', 'CREATE', 'positive_name', 'positive@email.com', 'male', 'ac
        ('NEGATIVE', 'PARTIAL_UPDATE', null, null, null, 'unknown'),
        ('NEGATIVE', 'PARTIAL_UPDATE', '', 'invalidMail', 'none', 'unknown')
 ;
+
+
+
+INSERT INTO todo_test_data(test_type, test_operation, title, due_date, status)
+VALUES ('POSITIVE', 'CREATE', 'Title', '2022-09-17T00:00:00.000+05:30', 'pending'),
+       ('POSITIVE', 'CREATE', 'title', '2022-09-17T00:00:00.000+05:30', 'completed'),
+       ('POSITIVE', 'CREATE', 'TITLE', '2022-09-17T00:00:00.000+05:30', 'pending'),
+       ('POSITIVE', 'CREATE', 'SOME LOOOOOONG TITLE AND TITLE', '2022-09-17T00:00:00.000+05:30', 'completed'),
+       ('POSITIVE', 'CREATE', 'T', '2022-09-17T00:00:00.000+04:00', 'completed'),
+       ('POSITIVE', 'CREATE', '123456789', '2022-09-17T00:00:00.000+05:30', 'completed'),
+       ('POSITIVE', 'CREATE', '(-_-)', '2022-09-17T00:00:00.000+05:30', 'completed'),
+
+       ('NEGATIVE', 'CREATE', '', '2022-09-17T00:00:00.000+05:30', 'completed'),
+       ('NEGATIVE', 'CREATE', ' ', '2022-09-17T00:00:00.000+05:30', 'pending'),
+       ('NEGATIVE', 'CREATE', ' ', 'invalidDate', 'pending'),
+       ('NEGATIVE', 'CREATE', ' ', '2022-09-17T00:00:00.000+05:30', 'unknown'),
+       ('NEGATIVE', 'CREATE', ' ', ' ', ' '),
+
+       ('POSITIVE', 'UPDATE', 'UpdatedTitle', '0', '0'),
+       ('POSITIVE', 'UPDATE', '0', '2022-09-18T00:00:00.000+05:30', '0'),
+       ('POSITIVE', 'UPDATE', '0', '0', 'completed'),
+       ('POSITIVE', 'UPDATE', 'xUpdatedTitle', '2022-10-19T00:00:00.000+05:30', 'completed'),
+
+       ('NEGATIVE', 'UPDATE', ' ', '0', '0'),
+       ('NEGATIVE', 'UPDATE', '0', 'invalidDate', '0'),
+       ('NEGATIVE', 'UPDATE', '0', '0', 'unknown'),
+       ('NEGATIVE', 'UPDATE', ' ', 'invalidDate', 'unknown'),
+
+       ('POSITIVE', 'PARTIAL_UPDATE', 'UpdatedTitle', '0', '0'),
+       ('POSITIVE', 'PARTIAL_UPDATE', '0', '2022-09-18T00:00:00.000+05:30', '0'),
+       ('POSITIVE', 'PARTIAL_UPDATE', '0', '0', 'completed'),
+       ('POSITIVE', 'PARTIAL_UPDATE', 'xUpdatedTitle', '2022-10-19T00:00:00.000+05:30', 'completed'),
+
+       ('NEGATIVE', 'PARTIAL_UPDATE', ' ', '0', '0'),
+       ('NEGATIVE', 'PARTIAL_UPDATE', '0', 'invalidDate', '0'),
+       ('NEGATIVE', 'PARTIAL_UPDATE', '0', '0', 'unknown'),
+       ('NEGATIVE', 'PARTIAL_UPDATE', ' ', 'invalidDate', 'unknown')
+;
